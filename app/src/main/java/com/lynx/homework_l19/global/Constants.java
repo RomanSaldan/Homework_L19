@@ -1,5 +1,7 @@
 package com.lynx.homework_l19.global;
 
+import com.lynx.homework_l19.R;
+
 /**
  * Created by WORK on 21.07.2015.
  */
@@ -11,5 +13,42 @@ public class Constants {
     public static final String  SENDER_ID                           = "687608994921";
     public static final String  GCM_PREFERENCES                     = "GCM_preferences";
     public static final int     NOTIFICATION_ID                     = 1234;
+
+    /*DB constants*/
+    public static final String DB_NAME = "myDB";
+    public static final String DB_TABLE = "tableNotifications";
+    public static final int DB_VERSION = 1;
+
+    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_TITLE = "title";
+    public static final String COLUMN_SUBTITLE = "subtitle";
+    public static final String COLUMN_MESSAGE = "message";
+    public static final String COLUMN_TICKER = "ticker";
+    public static final String COLUMN_SOUND = "sound";
+    public static final String COLUMN_VIBRATE = "vibrate";
+
+    public static final String DB_CREATE = "CREATE TABLE " + DB_TABLE
+            + "("   + COLUMN_ID + " integer primary key autoincrement, "
+                    + COLUMN_TITLE + " text, "
+                    + COLUMN_SUBTITLE + " text, "
+                    + COLUMN_MESSAGE + " text, "
+                    + COLUMN_TICKER + " text, "
+                    + COLUMN_SOUND + " text, "
+                    + COLUMN_VIBRATE + " text"
+            + ");";
+
+    public static final String[] DB_FROM = {
+            COLUMN_TICKER,
+            COLUMN_TITLE,
+            COLUMN_SUBTITLE,
+            COLUMN_MESSAGE
+    };
+
+    public static final int[] DB_TO = {
+            R.id.tvTicker_NLI,
+            R.id.tvTitle_NLI,
+            R.id.tvSubtitle_NLI,
+            R.id.tvMessage_NLI
+    };
 
 }

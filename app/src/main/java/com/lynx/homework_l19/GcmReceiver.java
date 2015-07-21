@@ -8,7 +8,7 @@ import android.content.Intent;
  * Created by WORK on 21.07.2015.
  */
 
-/*Broadcast receiver for getting push messages and show dialog*/
+/*Broadcast receiver for getting push messages */
 public class GcmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
