@@ -11,7 +11,7 @@ import android.content.Intent;
 /*Broadcast receiver for getting push messages */
 public final class GcmReceiver extends BroadcastReceiver {
     @Override
-    public void onReceive(Context context, Intent intent) {
-        MainActivity.showNotification(context, intent);
+    public void onReceive(Context _context, Intent _intent) {
+        MainActivity.showNotification(_context, _intent);
     }
 }

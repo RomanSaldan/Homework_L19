@@ -14,6 +14,12 @@ public final class Constants {
     public static final String  GCM_PREFERENCES                     = "GCM_preferences";
     public static final int     NOTIFICATION_ID                     = 1234;
     public static final long[]  VIBRATION                           = {100, 200, 300, 500};
+    public static final String  EMPTY_STRING                        = "";
+
+    public static final int     CONTEXT_MENU_OPTION_DELETE          = 1;
+    public static final int     CONTEXT_MENU_OPTION_DELETE_ALL      = 2;
+    public static final String  CONTEXT_MENU_DELETE                 = "Delete";
+    public static final String  CONTEXT_MENU_DELETE_ALL             = "Delete all";
 
     public static final String  EXTRA_KEY_MESSAGE       = "message";
     public static final String  EXTRA_KEY_TITLE         = "title";
@@ -21,6 +27,9 @@ public final class Constants {
     public static final String  EXTRA_KEY_TICKER        = "tickerText";
     public static final String  EXTRA_KEY_SOUND         = "sound";
     public static final String  EXTRA_KEY_VIBRATION     = "vibration";
+
+    public static final String  SOUND_ON                = "on";
+    public static final String  VIBRATION_ON            = "on";
 
     /*DB constants*/
     public static final String DB_NAME          = "myDB";

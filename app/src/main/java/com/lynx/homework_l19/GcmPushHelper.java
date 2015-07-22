@@ -36,12 +36,12 @@ public final class GcmPushHelper {
     * return empty string if there no one or app version changed*/
     public final String getRegistrationId(Context _context) {
         final SharedPreferences pref = getGcmPreferences(_context);
-        String regID = pref.getString(Constants.PROPERTY_REG_ID, "");
-        if(regID.isEmpty()) return "";
+        String regID = pref.getString(Constants.PROPERTY_REG_ID, Constants.EMPTY_STRING);
+        if(regID.isEmpty()) return Constants.EMPTY_STRING;
 
         int registeredVersion = pref.getInt(Constants.PROPERTY_APP_VERSION, Integer.MIN_VALUE);
         int currentVersion = getAppVersion(_context);
-        if(registeredVersion != currentVersion) return "";
+        if(registeredVersion != currentVersion) return Constants.EMPTY_STRING;
         return regID;
     }
 

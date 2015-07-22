@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.lynx.homework_l19.global.Constants;
 
+
 /**
  * Created by WORK on 21.07.2015.
  */
@@ -17,8 +18,8 @@ public final class DB {
     private DBHelper        mDBHelper;
     private SQLiteDatabase  mDB;
 
-    public DB(Context mCtx) {
-        this.mCtx = mCtx;
+    public DB(Context _mCtx) {
+        this.mCtx = _mCtx;
     }
 
     /*Open DB connection*/
@@ -48,15 +49,19 @@ public final class DB {
         );
     }
 
+    public void deleteNotificationById(int _id) {
+        mDB.delete(Constants.DB_TABLE, Constants.COLUMN_ID + " = " + _id, null);
+    }
+
     /*Add new notification to DB*/
     public void addContact(String _title, String _subtitle, String _message, String _ticker, String _sound, String _vibrate) {
         ContentValues cv = new ContentValues();
-        cv.put(Constants.COLUMN_TITLE, _title);
-        cv.put(Constants.COLUMN_SUBTITLE, _subtitle);
-        cv.put(Constants.COLUMN_MESSAGE, _message);
-        cv.put(Constants.COLUMN_TICKER, _ticker);
-        cv.put(Constants.COLUMN_SOUND, _sound);
-        cv.put(Constants.COLUMN_VIBRATE, _vibrate);
+        cv.put(Constants.COLUMN_TITLE,      _title);
+        cv.put(Constants.COLUMN_SUBTITLE,   _subtitle);
+        cv.put(Constants.COLUMN_MESSAGE,    _message);
+        cv.put(Constants.COLUMN_TICKER,     _ticker);
+        cv.put(Constants.COLUMN_SOUND,      _sound);
+        cv.put(Constants.COLUMN_VIBRATE,    _vibrate);
         mDB.insert(Constants.DB_TABLE, null, cv);
     }
 
@@ -68,22 +73,22 @@ public final class DB {
     /*Util class for serving DB*/
     private class DBHelper extends SQLiteOpenHelper {
 
-        public DBHelper(Context context) {
-            super(context, Constants.DB_NAME, null, Constants.DB_VERSION);
+        public DBHelper(Context _context) {
+            super(_context, Constants.DB_NAME, null, Constants.DB_VERSION);
         }
 
         @Override
-        public void onOpen(SQLiteDatabase db) {
-            super.onOpen(db);
+        public void onOpen(SQLiteDatabase _db) {
+            super.onOpen(_db);
         }
 
         @Override
-        public void onCreate(SQLiteDatabase db) {
-            db.execSQL(Constants.DB_CREATE);
+        public void onCreate(SQLiteDatabase _db) {
+            _db.execSQL(Constants.DB_CREATE);
         }
 
         @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        public void onUpgrade(SQLiteDatabase _db, int _oldVersion, int _newVersion) {
 
         }
     }

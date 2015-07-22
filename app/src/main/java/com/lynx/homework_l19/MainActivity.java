@@ -8,9 +8,12 @@ import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.lynx.homework_l19.global.Constants;
@@ -28,8 +31,8 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
     private GcmPushHelper                   mGcmHelper;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle _savedInstanceState) {
+        super.onCreate(_savedInstanceState);
         setContentView(R.layout.activity_main);
 
         prepareContent();
@@ -55,6 +58,7 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
         );
         lvNotifications_AM.setAdapter(ccAdapter);
         lvNotifications_AM.setOnItemClickListener(this);
+        registerForContextMenu(lvNotifications_AM);
     }
 
     /*Prepare GCM for use in this device*/
@@ -62,9 +66,9 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
         mGcmHelper = new GcmPushHelper();
         if (!mGcmHelper.checkPlayServices(this)) return;    // check availability of GoogleServices
         mGcm = GoogleCloudMessaging.getInstance(this);
-        mRegId = mGcmHelper.getRegistrationId(this);    // get device register ID
+        mRegId = mGcmHelper.getRegistrationId(this);        // get device register ID
         if (mRegId.isEmpty()) {
-            mGcmHelper.registerGcmAsync(this, mGcm);    // or register it
+            mGcmHelper.registerGcmAsync(this, mGcm);        // or register it
         }
     }
 
@@ -75,16 +79,16 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
     }
 
     /*Build and display notification from passed intent*/
-    public static void showNotification(Context context, final Intent intent) {
-        String message      = intent.getStringExtra(Constants.EXTRA_KEY_MESSAGE);
-        String title        = intent.getStringExtra(Constants.EXTRA_KEY_TITLE);
-        String subtitle     = intent.getStringExtra(Constants.EXTRA_KEY_SUBTITLE);
-        String tickerText   = intent.getStringExtra(Constants.EXTRA_KEY_TICKER);
-        String sound        = intent.getStringExtra(Constants.EXTRA_KEY_SOUND);
-        String vibration    = intent.getStringExtra(Constants.EXTRA_KEY_VIBRATION);
+    public static void showNotification(Context _context, final Intent _intent) {
+        String message      = _intent.getStringExtra(Constants.EXTRA_KEY_MESSAGE);
+        String title        = _intent.getStringExtra(Constants.EXTRA_KEY_TITLE);
+        String subtitle     = _intent.getStringExtra(Constants.EXTRA_KEY_SUBTITLE);
+        String tickerText   = _intent.getStringExtra(Constants.EXTRA_KEY_TICKER);
+        String sound        = _intent.getStringExtra(Constants.EXTRA_KEY_SOUND);
+        String vibration    = _intent.getStringExtra(Constants.EXTRA_KEY_VIBRATION);
 
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(_context)
                 .setSmallIcon(R.drawable.icon_cloud)
                 .setContentTitle(title)
                 .setSubText(subtitle)
@@ -92,10 +96,10 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
                 .setTicker(tickerText)
                 .setAutoCancel(true);
 
-        if(sound.equalsIgnoreCase("on")) builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        if(vibration.equalsIgnoreCase("on")) builder.setVibrate(Constants.VIBRATION);
+        if(sound.equalsIgnoreCase(Constants.SOUND_ON)) builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+        if(vibration.equalsIgnoreCase(Constants.VIBRATION_ON)) builder.setVibrate(Constants.VIBRATION);
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) _context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());
         myDB.addContact(title, subtitle, message, tickerText, sound, vibration);
 
@@ -114,16 +118,16 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
                 .setTicker(_ticker)
                 .setAutoCancel(true);
 
-        if(_sound.equalsIgnoreCase("on")) builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        if(_vibration.equalsIgnoreCase("on")) builder.setVibrate(Constants.VIBRATION);
+        if(_sound.equalsIgnoreCase(Constants.SOUND_ON)) builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+        if(_vibration.equalsIgnoreCase(Constants.VIBRATION_ON)) builder.setVibrate(Constants.VIBRATION);
 
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Cursor notifCursor = myDB.getNotificationById((int)id);
+    public void onItemClick(AdapterView<?> _parent, View _view, int _position, long _id) {
+        Cursor notifCursor = myDB.getNotificationById((int)_id);
         notifCursor.moveToFirst();
 
         String ticker       = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_TICKER));
@@ -134,5 +138,33 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
         String vibration    = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_VIBRATE));
 
         showNotification(ticker, title, subtitle, message, sound, vibration);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if(v.getId() == R.id.lvNotifications_AM) {
+            menu.setHeaderTitle(getString(R.string.context_menu_header));
+            menu.add(0, Constants.CONTEXT_MENU_OPTION_DELETE, 1, Constants.CONTEXT_MENU_DELETE);
+            menu.add(0, Constants.CONTEXT_MENU_OPTION_DELETE_ALL, 2, Constants.CONTEXT_MENU_DELETE_ALL);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        switch (item.getItemId()) {
+            case Constants.CONTEXT_MENU_OPTION_DELETE:
+                myDB.deleteNotificationById((int)menuInfo.id);
+                ccAdapter.swapCursor(myDB.getAllData());
+                ccAdapter.notifyDataSetChanged();
+                break;
+            case Constants.CONTEXT_MENU_OPTION_DELETE_ALL:
+                myDB.dropDB();
+                ccAdapter.swapCursor(myDB.getAllData());
+                ccAdapter.notifyDataSetChanged();
+                break;
+        }
+        return true;
     }
 }

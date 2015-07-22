@@ -18,21 +18,21 @@ import com.lynx.homework_l19.global.Constants;
 
 public final class CustomCursorAdapter extends SimpleCursorAdapter {
 
-    public CustomCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
-        super(context, layout, c, from, to, flags);
+    public CustomCursorAdapter(Context _context, int _layout, Cursor _c, String[] _from, int[] _to, int _flags) {
+        super(_context, _layout, _c, _from, _to, _flags);
     }
 
     private static class ViewHolder {
-        TextView tvTicker_NLI;
-        TextView tvTitle_NLI;
-        TextView tvSubtitle_NLI;
-        TextView tvMessage_NLI;
+        TextView    tvTicker_NLI;
+        TextView    tvTitle_NLI;
+        TextView    tvSubtitle_NLI;
+        TextView    tvMessage_NLI;
     }
 
     /*Inflate new view*/
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View rowView = LayoutInflater.from(context).inflate(R.layout.notification_list_item, parent, false);
+    public View newView(Context _context, Cursor _cursor, ViewGroup _parent) {
+        View rowView = LayoutInflater.from(_context).inflate(R.layout.notification_list_item, _parent, false);
         ViewHolder holder = new ViewHolder();
         holder.tvTicker_NLI       = (TextView) rowView.findViewById(R.id.tvTicker_NLI);
         holder.tvTitle_NLI        = (TextView) rowView.findViewById(R.id.tvTitle_NLI);
@@ -43,14 +43,14 @@ public final class CustomCursorAdapter extends SimpleCursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View _view, Context _context, Cursor _cursor) {
 
-        String ticker       = cursor.getString(cursor.getColumnIndex(Constants.COLUMN_TICKER));
-        String title        = cursor.getString(cursor.getColumnIndex(Constants.COLUMN_TITLE));
-        String subtitle     = cursor.getString(cursor.getColumnIndex(Constants.COLUMN_SUBTITLE));
-        String message      = cursor.getString(cursor.getColumnIndex(Constants.COLUMN_MESSAGE));
+        String ticker       = _cursor.getString(_cursor.getColumnIndex(Constants.COLUMN_TICKER));
+        String title        = _cursor.getString(_cursor.getColumnIndex(Constants.COLUMN_TITLE));
+        String subtitle     = _cursor.getString(_cursor.getColumnIndex(Constants.COLUMN_SUBTITLE));
+        String message      = _cursor.getString(_cursor.getColumnIndex(Constants.COLUMN_MESSAGE));
 
-        ViewHolder holder = (ViewHolder) view.getTag();
+        ViewHolder holder = (ViewHolder) _view.getTag();
 
         holder.tvTicker_NLI    .setText(ticker);
         holder.tvTitle_NLI     .setText(title);
