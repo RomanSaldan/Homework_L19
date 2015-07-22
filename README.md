@@ -22,7 +22,7 @@
 }
 </pre>
 When you build push notification dont forget to set next options:</br>
-"Authorozation" - "key=<b>AIzaSyDimJbJ2ZL3nOkoA13zuFgMpJ2NwtgGYVs</b>"<br>
+"Authorization" - "key=<b>AIzaSyDimJbJ2ZL3nOkoA13zuFgMpJ2NwtgGYVs</b>"<br>
 "Content-Type"  - "application/json"</br>
 <br>
 You can download apk from DropBox: <a href="https://www.dropbox.com/s/aqpk78hnwjjhp3h/Homework_L19.apk?dl=0">download</a>
