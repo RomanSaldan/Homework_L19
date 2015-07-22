@@ -18,7 +18,7 @@ import java.io.IOException;
 /**
  * Created by WORK on 21.07.2015.
  */
-public class GcmPushHelper {
+public final class GcmPushHelper {
 
     /*Check if GooglePlayServices is available on current device and offer user download it is possible*/
     public final boolean checkPlayServices(Activity _activity) {
@@ -26,7 +26,7 @@ public class GcmPushHelper {
         if(resultCode != ConnectionResult.SUCCESS) {
             if(GooglePlayServicesUtil.isUserRecoverableError(resultCode))
                 GooglePlayServicesUtil.getErrorDialog(resultCode, _activity, Constants.PLAY_SERVICES_RESOLUTION_REQUEST);
-            else Toast.makeText(_activity, "This device is not supported!", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(_activity, _activity.getString(R.string.toast_err_device_not_supported), Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -70,7 +70,7 @@ public class GcmPushHelper {
             protected Void doInBackground(Void... params) {
                 try {
                     String regId = _gcm.register(Constants.SENDER_ID);
-                    storeRegistrationId(_context, regId);
+                    storeRegistrationId(_context, regId);   // save registration data & app version to shared preferences
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -9,7 +9,7 @@ import android.content.Intent;
  */
 
 /*Broadcast receiver for getting push messages */
-public class GcmReceiver extends BroadcastReceiver {
+public final class GcmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         MainActivity.showNotification(context, intent);

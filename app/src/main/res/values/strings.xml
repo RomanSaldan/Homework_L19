@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Homework_L19</string>
+    <string name="toast_err_device_not_supported">This device is not supported!</string>
 
 </resources>

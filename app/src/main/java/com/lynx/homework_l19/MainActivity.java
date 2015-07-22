@@ -8,35 +8,41 @@ import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.lynx.homework_l19.global.Constants;
 
 
-public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
+public final class MainActivity extends Activity implements AdapterView.OnItemClickListener {
 
-    private ListView                lvNotifications_AM;
-    private static CustomCursorAdapter     ccAdapter;
-    private static DB               myDB;
+    private static CustomCursorAdapter      ccAdapter;
+    private static DB                       myDB;
 
-    private GoogleCloudMessaging    mGcm;
-    private String                  mRegId;
-    private GcmPushHelper           mGcmHelper;
+    private ListView                        lvNotifications_AM;
+
+    private GoogleCloudMessaging            mGcm;
+    private String                          mRegId;
+    private GcmPushHelper                   mGcmHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        prepareContent();
+        prepareGCM();
+    }
+
+    /*Initialize DB and ListView for display DB data*/
+    private final void prepareContent() {
         if(myDB == null) {
             myDB = new DB(this);
             myDB.openDB();
-        }
+        } else
+            myDB.openDB();
 
         lvNotifications_AM = (ListView) findViewById(R.id.lvNotifications_AM);
         ccAdapter = new CustomCursorAdapter(
@@ -49,7 +55,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         );
         lvNotifications_AM.setAdapter(ccAdapter);
         lvNotifications_AM.setOnItemClickListener(this);
+    }
 
+    /*Prepare GCM for use in this device*/
+    private final void prepareGCM() {
         mGcmHelper = new GcmPushHelper();
         if (!mGcmHelper.checkPlayServices(this)) return;    // check availability of GoogleServices
         mGcm = GoogleCloudMessaging.getInstance(this);
@@ -67,12 +76,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
     /*Build and display notification from passed intent*/
     public static void showNotification(Context context, final Intent intent) {
-        String message      = intent.getStringExtra("message");
-        String title        = intent.getStringExtra("title");
-        String subtitle     = intent.getStringExtra("subtitle");
-        String tickerText   = intent.getStringExtra("tickerText");
-        String sound        = intent.getStringExtra("sound");
-        String vibration    = intent.getStringExtra("vibration");
+        String message      = intent.getStringExtra(Constants.EXTRA_KEY_MESSAGE);
+        String title        = intent.getStringExtra(Constants.EXTRA_KEY_TITLE);
+        String subtitle     = intent.getStringExtra(Constants.EXTRA_KEY_SUBTITLE);
+        String tickerText   = intent.getStringExtra(Constants.EXTRA_KEY_TICKER);
+        String sound        = intent.getStringExtra(Constants.EXTRA_KEY_SOUND);
+        String vibration    = intent.getStringExtra(Constants.EXTRA_KEY_VIBRATION);
 
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
@@ -84,11 +93,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 .setAutoCancel(true);
 
         if(sound.equalsIgnoreCase("on")) builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        if(vibration.equalsIgnoreCase("on")) builder.setVibrate(new long[] {100, 200, 300, 500});
+        if(vibration.equalsIgnoreCase("on")) builder.setVibrate(Constants.VIBRATION);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());
         myDB.addContact(title, subtitle, message, tickerText, sound, vibration);
+
         ccAdapter.swapCursor(myDB.getAllData());
         ccAdapter.notifyDataSetChanged();
     }
@@ -105,7 +115,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 .setAutoCancel(true);
 
         if(_sound.equalsIgnoreCase("on")) builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        if(_vibration.equalsIgnoreCase("on")) builder.setVibrate(new long[] {100, 200, 300, 500});
+        if(_vibration.equalsIgnoreCase("on")) builder.setVibrate(Constants.VIBRATION);
 
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());
@@ -115,12 +125,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Cursor notifCursor = myDB.getNotificationById((int)id);
         notifCursor.moveToFirst();
-        String ticker = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_TICKER));
-        String title = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_TITLE));
-        String subtitle = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_SUBTITLE));
-        String message = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_MESSAGE));
-        String sound = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_SOUND));
-        String vibration = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_VIBRATE));
+
+        String ticker       = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_TICKER));
+        String title        = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_TITLE));
+        String subtitle     = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_SUBTITLE));
+        String message      = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_MESSAGE));
+        String sound        = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_SOUND));
+        String vibration    = notifCursor.getString(notifCursor.getColumnIndex(Constants.COLUMN_VIBRATE));
+
         showNotification(ticker, title, subtitle, message, sound, vibration);
     }
 }
