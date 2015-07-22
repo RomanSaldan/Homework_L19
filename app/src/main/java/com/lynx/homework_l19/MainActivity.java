@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.lynx.homework_l19.global.Constants;
@@ -62,7 +61,7 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
         registerForContextMenu(lvNotifications_AM);
     }
 
-    /*Prepare GCM for use in this device*/
+    /*Prepare GCM for use on this device*/
     private final void prepareGCM() {
         mGcmHelper = new GcmPushHelper();
         if (!mGcmHelper.checkPlayServices(this)) return;    // check availability of GoogleServices
@@ -88,6 +87,8 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
         String sound        = _intent.getStringExtra(Constants.EXTRA_KEY_SOUND);
         String vibration    = _intent.getStringExtra(Constants.EXTRA_KEY_VIBRATION);
 
+        final PendingIntent pIntent
+                = PendingIntent.getActivity(_context, Constants.PI_REQUEST_CODE, new Intent(_context, MainActivity.class), 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(_context)
                 .setSmallIcon(R.drawable.icon_cloud)
@@ -95,6 +96,7 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
                 .setSubText(subtitle)
                 .setContentText(message)
                 .setTicker(tickerText)
+                .setContentIntent(pIntent)
                 .setAutoCancel(true);
 
         if(sound.equalsIgnoreCase(Constants.SOUND_ON)) builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
@@ -103,7 +105,7 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
         NotificationManager notificationManager = (NotificationManager) _context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());
 
-        if(myDB == null) {
+        if(myDB == null) {  // initialize DB and adapter if application is offline
             myDB = new DB(_context);
             myDB.openDB();
             ccAdapter = new CustomCursorAdapter(
@@ -120,8 +122,11 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
         ccAdapter.notifyDataSetChanged();
     }
 
-    /*Overloaded*/
+    /*Overloaded. For display existing notifications*/
     public void showNotification(String _ticker, String _title, String _subtitle, String _message, String _sound, String _vibration) {
+
+        final PendingIntent pIntent
+                = PendingIntent.getActivity(this, Constants.PI_REQUEST_CODE, new Intent(this, MainActivity.class), 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.icon_cloud)
@@ -129,6 +134,7 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
                 .setSubText(_subtitle)
                 .setContentText(_message)
                 .setTicker(_ticker)
+                .setContentIntent(pIntent)
                 .setAutoCancel(true);
 
         if(_sound.equalsIgnoreCase(Constants.SOUND_ON)) builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
@@ -138,6 +144,7 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
         notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());
     }
 
+    /*Display clicked notification*/
     @Override
     public void onItemClick(AdapterView<?> _parent, View _view, int _position, long _id) {
         Cursor notifCursor = myDB.getNotificationById((int)_id);
@@ -167,12 +174,12 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         switch (item.getItemId()) {
-            case Constants.CONTEXT_MENU_OPTION_DELETE:
+            case Constants.CONTEXT_MENU_OPTION_DELETE:          // delete
                 myDB.deleteNotificationById((int)menuInfo.id);
                 ccAdapter.swapCursor(myDB.getAllData());
                 ccAdapter.notifyDataSetChanged();
                 break;
-            case Constants.CONTEXT_MENU_OPTION_DELETE_ALL:
+            case Constants.CONTEXT_MENU_OPTION_DELETE_ALL:      // delete all
                 myDB.dropDB();
                 ccAdapter.swapCursor(myDB.getAllData());
                 ccAdapter.notifyDataSetChanged();

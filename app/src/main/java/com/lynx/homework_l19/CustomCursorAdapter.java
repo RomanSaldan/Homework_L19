@@ -22,6 +22,7 @@ public final class CustomCursorAdapter extends SimpleCursorAdapter {
         super(_context, _layout, _c, _from, _to, _flags);
     }
 
+    /*ViewHolder nested class*/
     private static class ViewHolder {
         TextView    tvTicker_NLI;
         TextView    tvTitle_NLI;
@@ -29,7 +30,7 @@ public final class CustomCursorAdapter extends SimpleCursorAdapter {
         TextView    tvMessage_NLI;
     }
 
-    /*Inflate new view*/
+    /*Inflate new view, initialize ViewHolder and set it to this view*/
     @Override
     public View newView(Context _context, Cursor _cursor, ViewGroup _parent) {
         View rowView = LayoutInflater.from(_context).inflate(R.layout.notification_list_item, _parent, false);
@@ -42,6 +43,7 @@ public final class CustomCursorAdapter extends SimpleCursorAdapter {
         return rowView;
     }
 
+    /*Set data retrieved from DB using ViewHolder*/
     @Override
     public void bindView(View _view, Context _context, Cursor _cursor) {
 

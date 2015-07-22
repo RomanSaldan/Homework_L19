@@ -25,76 +25,76 @@
     </style>
 
     <style name="NotificationImageStyle">
-        <item name="android:layout_width">80dp</item>
-        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_width">@dimen/notification_image_width</item>
+        <item name="android:layout_height">@dimen/notification_image_height</item>
         <item name="android:src">@drawable/background_image</item>
     </style>
 
     <style name="TickerLabelStyle" parent="android:Widget.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">Ticker: </item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:text">@string/label_ticker</item>
+        <item name="android:textSize">@dimen/notification_list_item_text_size</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingLeft">@dimen/notification_text_padding_left</item>
+        <item name="android:paddingRight">@dimen/notification_text_padding_right</item>
     </style>
 
     <style name="TitleLabelStyle" parent="android:Widget.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">Title: </item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:text">@string/label_title</item>
+        <item name="android:textSize">@dimen/notification_list_item_text_size</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingLeft">@dimen/notification_text_padding_left</item>
+        <item name="android:paddingRight">@dimen/notification_text_padding_right</item>
     </style>
 
     <style name="SubtitleLabelStyle" parent="android:Widget.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">Subtitle: </item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:text">@string/label_subtitle</item>
+        <item name="android:textSize">@dimen/notification_list_item_text_size</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingLeft">@dimen/notification_text_padding_left</item>
+        <item name="android:paddingRight">@dimen/notification_text_padding_right</item>
     </style>
 
     <style name="MessageLabelStyle" parent="android:Widget.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">Message: </item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:text">@string/label_message</item>
+        <item name="android:textSize">@dimen/notification_list_item_text_size</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingLeft">@dimen/notification_text_padding_left</item>
+        <item name="android:paddingRight">@dimen/notification_text_padding_right</item>
     </style>
 
     <style name="TickerStyle" parent="android:Widget.TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">@dimen/notification_list_item_text_size</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="TitleStyle" parent="android:Widget.TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">@dimen/notification_list_item_text_size</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="SubtitleStyle" parent="android:Widget.TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">@dimen/notification_list_item_text_size</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="MessageStyle" parent="android:Widget.TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">@dimen/notification_list_item_text_size</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 

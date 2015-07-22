@@ -8,10 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.lynx.homework_l19.global.Constants;
 
-
 /**
  * Created by WORK on 21.07.2015.
  */
+/*Util class destined for serving DB with notifications*/
 public final class DB {
 
     private final Context   mCtx;
@@ -49,6 +49,7 @@ public final class DB {
         );
     }
 
+    /*Delete notification with passed _id*/
     public void deleteNotificationById(int _id) {
         mDB.delete(Constants.DB_TABLE, Constants.COLUMN_ID + " = " + _id, null);
     }

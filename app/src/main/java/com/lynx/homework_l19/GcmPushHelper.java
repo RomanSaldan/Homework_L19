@@ -16,8 +16,10 @@ import com.lynx.homework_l19.global.Constants;
 import java.io.IOException;
 
 /**
- * Created by WORK on 21.07.2015.
+ * created by work on 21.07.2015.
  */
+
+/*Util class for serving GCM and store settings info to SharedPreferences*/
 public final class GcmPushHelper {
 
     /*Check if GooglePlayServices is available on current device and offer user download it is possible*/

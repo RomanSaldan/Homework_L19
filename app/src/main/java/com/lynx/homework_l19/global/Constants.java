@@ -8,6 +8,7 @@ import com.lynx.homework_l19.R;
 public final class Constants {
 
     public static final int     PLAY_SERVICES_RESOLUTION_REQUEST    = 9000;
+    public static final int     PI_REQUEST_CODE                     = 777;
     public static final String  PROPERTY_REG_ID                     = "registration_id";
     public static final String  PROPERTY_APP_VERSION                = "appVersion";
     public static final String  SENDER_ID                           = "687608994921";
