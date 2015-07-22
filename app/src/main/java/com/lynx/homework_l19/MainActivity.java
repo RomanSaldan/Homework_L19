@@ -2,6 +2,7 @@ package com.lynx.homework_l19;
 
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -65,8 +66,8 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
     private final void prepareGCM() {
         mGcmHelper = new GcmPushHelper();
         if (!mGcmHelper.checkPlayServices(this)) return;    // check availability of GoogleServices
-        mGcm = GoogleCloudMessaging.getInstance(this);
-        mRegId = mGcmHelper.getRegistrationId(this);        // get device register ID
+        mGcm    = GoogleCloudMessaging.getInstance(this);
+        mRegId  = mGcmHelper.getRegistrationId(this);       // get device register ID
         if (mRegId.isEmpty()) {
             mGcmHelper.registerGcmAsync(this, mGcm);        // or register it
         }
@@ -101,8 +102,20 @@ public final class MainActivity extends Activity implements AdapterView.OnItemCl
 
         NotificationManager notificationManager = (NotificationManager) _context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());
-        myDB.addContact(title, subtitle, message, tickerText, sound, vibration);
 
+        if(myDB == null) {
+            myDB = new DB(_context);
+            myDB.openDB();
+            ccAdapter = new CustomCursorAdapter(
+                    _context,
+                    R.layout.notification_list_item,
+                    myDB.getAllData(),
+                    Constants.DB_FROM,
+                    Constants.DB_TO,
+                    0
+            );
+        }
+        myDB.addContact(title, subtitle, message, tickerText, sound, vibration);
         ccAdapter.swapCursor(myDB.getAllData());
         ccAdapter.notifyDataSetChanged();
     }

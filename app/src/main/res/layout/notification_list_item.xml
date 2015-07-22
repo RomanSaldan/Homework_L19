@@ -1,111 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/holo_green_light">
+                style="@style/ListItemLayoutStyle">
 
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        style="@style/NotificationImageStyle"
         android:id="@+id/imageView"
-        android:src="@drawable/icon_cloud"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ticker: "
+        style="@style/TickerLabelStyle"
         android:id="@+id/tvTickerLabel_NLI"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/imageView"
-        android:textSize="12sp"
         android:layout_alignRight="@+id/tvTitleLabel_NLI"
-        android:layout_alignEnd="@+id/tvTitleLabel_NLI"
-        android:textStyle="bold"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp"/>
+        android:layout_alignEnd="@+id/tvTitleLabel_NLI"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Title: "
+        style="@style/TitleLabelStyle"
         android:id="@+id/tvTitleLabel_NLI"
         android:layout_below="@+id/tvTickerLabel_NLI"
         android:layout_toRightOf="@+id/imageView"
-        android:textSize="12sp"
         android:layout_alignRight="@+id/tvSubtitleLabel_NLI"
-        android:layout_alignEnd="@+id/tvSubtitleLabel_NLI"
-        android:textStyle="bold"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp"/>
+        android:layout_alignEnd="@+id/tvSubtitleLabel_NLI"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Subtitle: "
+        style="@style/SubtitleLabelStyle"
         android:id="@+id/tvSubtitleLabel_NLI"
         android:layout_below="@+id/tvTitleLabel_NLI"
         android:layout_toRightOf="@+id/imageView"
-        android:textSize="12sp"
         android:layout_alignRight="@+id/tvMessageLabel_NLI"
-        android:layout_alignEnd="@+id/tvMessageLabel_NLI"
-        android:textStyle="bold"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp"/>
+        android:layout_alignEnd="@+id/tvMessageLabel_NLI"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Message: "
+        style="@style/MessageLabelStyle"
         android:id="@+id/tvMessageLabel_NLI"
         android:layout_below="@+id/tvSubtitleLabel_NLI"
-        android:layout_toRightOf="@+id/imageView"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp"/>
+        android:layout_toRightOf="@+id/imageView"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/TickerStyle"
         android:id="@+id/tvTicker_NLI"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/tvTickerLabel_NLI"
-        android:layout_toEndOf="@+id/tvTickerLabel_NLI"
-        android:textSize="12sp"
-        android:textColor="@android:color/white"/>
+        android:layout_toEndOf="@+id/tvTickerLabel_NLI"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/TitleStyle"
         android:id="@+id/tvTitle_NLI"
         android:layout_below="@+id/tvTickerLabel_NLI"
         android:layout_toRightOf="@+id/tvTitleLabel_NLI"
-        android:layout_toEndOf="@+id/tvTitleLabel_NLI"
-        android:textSize="12sp"
-        android:textColor="@android:color/white"/>
+        android:layout_toEndOf="@+id/tvTitleLabel_NLI"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/SubtitleStyle"
         android:id="@+id/tvSubtitle_NLI"
         android:layout_below="@+id/tvTitleLabel_NLI"
         android:layout_toRightOf="@+id/tvSubtitleLabel_NLI"
-        android:layout_toEndOf="@+id/tvSubtitleLabel_NLI"
-        android:textSize="12sp"
-        android:textColor="@android:color/white"/>
+        android:layout_toEndOf="@+id/tvSubtitleLabel_NLI"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/MessageStyle"
         android:id="@+id/tvMessage_NLI"
         android:layout_below="@+id/tvSubtitleLabel_NLI"
         android:layout_toRightOf="@+id/tvMessageLabel_NLI"
         android:layout_toEndOf="@+id/tvMessageLabel_NLI"
-        android:textSize="12sp"
-        android:layout_alignBottom="@+id/imageView"
-        android:textColor="@android:color/white"/>
+        android:layout_alignBottom="@+id/imageView"/>
 
 </RelativeLayout>
