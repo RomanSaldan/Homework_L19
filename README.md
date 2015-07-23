@@ -7,7 +7,7 @@
 1. To display stored notification click on it in listview of notifications.</br>
 2. If you want to delete some of stored notifications you can do it by getting context menu on this notification in list and select <b>"Delete"</b> option.</br>
 3. You can also delete all of stored notifications by getting context menu on any of stored notifications and select <b>"Delete all"</b> option.</br>
-4. For send push notification use next JSON code snippet</br>
+4. For sending push notification use next JSON code snippet</br>
 <pre>
 {
     "registration_ids" : ["<i>YOUR_DEVICE_KEY</i>"],
